@@ -76,6 +76,7 @@
       border-radius: 14px;
       position: absolute;
       z-index: 1;
+      display: none;
     }
 
     #loveText {
@@ -128,11 +129,21 @@
 
   <div id="loveText">bnd sni svyrm cnm &lt;3</div>
 
-  <img class="gif" src="https://media.giphy.com/media/j5zW9FjQkeGJW/giphy.gif">
+ 
   <img class="gif" src="https://media.giphy.com/media/KztT2c4u8mYYUiMKdJ/giphy.gif">
   <img class="gif" src="https://media.giphy.com/media/l4FGI8GoTL7N4DsyI/giphy.gif">
-  <img class="gif" src="https://media.tenor.com/8Y4gEhlBbX8AAAAM/cat-yippe-yippee.gif">
   <img class="gif" src="https://media.tenor.com/Gn8utU2JvWcAAAAM/cat-jumping-jump-excited-yippee.gif">
+  <img class="gif" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
+  <img class="gif" src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif">
+  <img class="gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+  <img class="gif" src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif">
+  <img class="gif" src="https://media.giphy.com/media/13borq7Zo2kulO/giphy.gif">
+  <img class="gif" src="https://media.giphy.com/media/5VKbvrjxpVJCM/giphy.gif">
+  <img class="gif" src="https://media.giphy.com/media/l0Ex7lQYIj1z3gqYo/giphy.gif">
+  <img class="gif" src="https://media.giphy.com/media/3oriNVvsHn0PuMIbX2/giphy.gif">
+  <img class="gif" src="https://media.giphy.com/media/1BXa2alBjrCXC/giphy.gif">
+  <img class="gif" src="https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/giphy.gif">
+
 
   <div id="tenorEmbedBox">
       <div class="tenor-gif-embed" data-postid="16606050094708454978" data-share-method="host" data-aspect-ratio="1.02469" data-width="100%">
@@ -190,12 +201,15 @@
         vx: (Math.random() * 2 + 1) * (Math.random() < 0.5 ? -1 : 1),
         vy: (Math.random() * 2 + 1) * (Math.random() < 0.5 ? -1 : 1),
         w: gif.clientWidth,
-        h: gif.clientHeight
+        h: gif.clientHeight,
+        active: false
       });
     });
 
     function moveGIFs() {
       gifObjects.forEach(g => {
+        if (!g.active) return;
+
         g.x += g.vx;
         g.y += g.vy;
 
@@ -203,7 +217,7 @@
         if (g.y <= 0 || g.y + g.h >= window.innerHeight) g.vy *= -1;
 
         gifObjects.forEach(other => {
-          if (g !== other) {
+          if (g !== other && other.active) {
             if (
               g.x < other.x + other.w &&
               g.x + g.w > other.x &&
@@ -229,7 +243,11 @@
       music.play();
       loveText.style.display = "block";
       text.style.display = "none";
+      hayirBtn.style.display = "none";  // HAYIR BUTONU KAYBOLUYOR
       buttonContainer.style.display = "none";
+
+      gifs.forEach(g => g.style.display = "block");
+      gifObjects.forEach(g => g.active = true);
 
       setInterval(() => {
         let heart = document.createElement("div");
