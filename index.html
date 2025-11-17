@@ -30,7 +30,7 @@
       flex-direction: column;
       align-items: center;
       gap: 20px;
-      z-index: 5;
+      z-index: 100;
       text-align: center;
       padding: 0 10px;
     }
@@ -40,6 +40,8 @@
       gap: 15px;
       flex-wrap: wrap;
       justify-content: center;
+      z-index: 100;
+      position: relative;
     }
 
     button {
@@ -50,72 +52,30 @@
       cursor: pointer;
       transition: 0.3s;
       font-family: 'Great Vibes', cursive;
+      z-index: 100;
     }
 
     button:hover {
       transform: scale(1.15);
     }
 
-    #evetBtn { 
-      background-color: #4caf50; 
-      color: white;  
-    }
-
-    #hayirBtn { 
-      background-color: #f44336; 
-      color: white; 
-      position: relative; 
-      z-index: 9999;  /* HAYIR BUTONU HER ZAMAN ÖNDE */
-    }
+    #evetBtn { background-color: #4caf50; color: white; }
+    #hayirBtn { background-color: #f44336; color: white; z-index: 9999; }
 
     #text {
       font-size: 12vw;
       font-weight: bold;
       color: #c2185b;
       text-shadow: 0 0 15px #ff8ecf;
-      z-index: 1;
+      z-index: 100;
       position: relative;
     }
 
-    .heart {
-      position: fixed;
-      font-size: 22px;
-      animation: fall 3s linear forwards;
-      opacity: 0.85;
-      pointer-events: none;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(-30px) scale(1); opacity: 1; }
-      100% { transform: translateY(110vh) scale(1.5); opacity: 0; }
-    }
-
-    .gif-container {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: none;
-      gap: 15px;
-      z-index: 10;
-      max-width: 95%;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .gif-container img {
-      width: 32vw;
-      max-width: 130px;
-      min-width: 90px;
+    .gif {
+      width: 130px;
       border-radius: 14px;
-      opacity: 0;
-      transform: scale(0.5);
-      animation: popIn 1.5s forwards;
-    }
-
-    @keyframes popIn {
-      0% { opacity: 0; transform: scale(0.5); }
-      100% { opacity: 1; transform: scale(1); }
+      position: absolute;
+      z-index: 1;
     }
 
     #loveText {
@@ -127,7 +87,7 @@
       text-shadow: 0 0 25px #ff6bbc;
       display: none;
       animation: loveFade 2.5s forwards;
-      z-index: 20;
+      z-index: 100;
       padding: 0 10px;
     }
 
@@ -136,6 +96,28 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
+    .heart {
+      position: fixed;
+      font-size: 22px;
+      animation: fall 3s linear forwards;
+      opacity: 0.85;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-30px) scale(1); opacity: 1; }
+      100% { transform: translateY(110vh) scale(1.5); opacity: 0; }
+    }
+
+    #tenorEmbedBox {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 200px;
+      z-index: 2;
+      opacity: 0.9;
+    }
   </style>
 </head>
 <body>
@@ -146,12 +128,19 @@
 
   <div id="loveText">bnd sni svyrm cnm &lt;3</div>
 
-  <div class="gif-container" id="gifs">
-    <img src="https://media.giphy.com/media/j5zW9FjQkeGJW/giphy.gif">
-    <img src="https://media.giphy.com/media/KztT2c4u8mYYUiMKdJ/giphy.gif">
-    <img src="https://media.giphy.com/media/l4FGI8GoTL7N4DsyI/giphy.gif">
-    <img src="https://media.tenor.com/8Y4gEhlBbX8AAAAM/cat-yippe-yippee.gif">
+  <img class="gif" src="https://media.giphy.com/media/j5zW9FjQkeGJW/giphy.gif">
+  <img class="gif" src="https://media.giphy.com/media/KztT2c4u8mYYUiMKdJ/giphy.gif">
+  <img class="gif" src="https://media.giphy.com/media/l4FGI8GoTL7N4DsyI/giphy.gif">
+  <img class="gif" src="https://media.tenor.com/8Y4gEhlBbX8AAAAM/cat-yippe-yippee.gif">
+  <img class="gif" src="https://media.tenor.com/Gn8utU2JvWcAAAAM/cat-jumping-jump-excited-yippee.gif">
+
+  <div id="tenorEmbedBox">
+      <div class="tenor-gif-embed" data-postid="16606050094708454978" data-share-method="host" data-aspect-ratio="1.02469" data-width="100%">
+          <a href="https://tenor.com/view/cat-gif-16606050094708454978">Cat Sticker</a>
+          from <a href="https://tenor.com/search/cat-stickers">Cat Stickers</a>
+      </div>
   </div>
+  <script async src="https://tenor.com/embed.js"></script>
 
   <div class="container">
     <div id="text">Beni Seviyor Musun?</div>
@@ -165,9 +154,10 @@
   <script>
     const hayirBtn = document.getElementById("hayirBtn");
     const evetBtn = document.getElementById("evetBtn");
-    const gifs = document.getElementById("gifs");
+    const gifs = document.querySelectorAll(".gif");
     const music = document.getElementById("music");
     const loveText = document.getElementById("loveText");
+    const text = document.getElementById("text");
     const buttonContainer = document.getElementById("buttonContainer");
 
     let escaped = false;
@@ -176,12 +166,9 @@
       if (!escaped) {
         const rect = hayirBtn.getBoundingClientRect();
         const bodyRect = document.body.getBoundingClientRect();
-
         hayirBtn.style.position = "absolute";
         hayirBtn.style.left = rect.left - bodyRect.left + "px";
         hayirBtn.style.top = rect.top - bodyRect.top + "px";
-        hayirBtn.style.zIndex = "9999";
-
         document.body.appendChild(hayirBtn);
         escaped = true;
       }
@@ -191,7 +178,73 @@
 
       hayirBtn.style.left = Math.random() * maxX + "px";
       hayirBtn.style.top  = Math.random() * maxY + "px";
-      hayirBtn.style.zIndex = "9999";
     });
 
-    evetBt
+    let gifObjects = [];
+
+    gifs.forEach(gif => {
+      gifObjects.push({
+        el: gif,
+        x: Math.random() * (window.innerWidth - 120),
+        y: Math.random() * (window.innerHeight - 120),
+        vx: (Math.random() * 2 + 1) * (Math.random() < 0.5 ? -1 : 1),
+        vy: (Math.random() * 2 + 1) * (Math.random() < 0.5 ? -1 : 1),
+        w: gif.clientWidth,
+        h: gif.clientHeight
+      });
+    });
+
+    function moveGIFs() {
+      gifObjects.forEach(g => {
+        g.x += g.vx;
+        g.y += g.vy;
+
+        if (g.x <= 0 || g.x + g.w >= window.innerWidth) g.vx *= -1;
+        if (g.y <= 0 || g.y + g.h >= window.innerHeight) g.vy *= -1;
+
+        gifObjects.forEach(other => {
+          if (g !== other) {
+            if (
+              g.x < other.x + other.w &&
+              g.x + g.w > other.x &&
+              g.y < other.y + other.h &&
+              g.y + g.h > other.y
+            ) {
+              g.vx *= -1;
+              g.vy *= -1;
+              other.vx *= -1;
+              other.vy *= -1;
+            }
+          }
+        });
+
+        g.el.style.left = g.x + "px";
+        g.el.style.top = g.y + "px";
+      });
+
+      requestAnimationFrame(moveGIFs);
+    }
+
+    evetBtn.addEventListener("click", () => {
+      music.play();
+      loveText.style.display = "block";
+      text.style.display = "none";
+      buttonContainer.style.display = "none";
+
+      setInterval(() => {
+        let heart = document.createElement("div");
+        heart.classList.add("heart");
+        const hearts = ["❤️","💖","💗","💕","💞","💘"];
+        heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.fontSize = (22 + Math.random() * 25) + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+      }, 180);
+
+      moveGIFs();
+    });
+  </script>
+
+</body>
+</html>
