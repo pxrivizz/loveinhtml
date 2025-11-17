@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zeynep Halil'i Seviyor Mu?</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle, #ffe4f2, #ffb8d9);
+      font-family: 'Great Vibes', cursive;
+      overflow: hidden;
+      animation: bgGlow 6s infinite alternate;
+    }
+
+    @keyframes bgGlow {
+      0% { background: radial-gradient(circle, #ffd6ec, #ffb1d6); }
+      100% { background: radial-gradient(circle, #ffe9f5, #ffa2ce); }
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      z-index: 5;
+      text-align: center;
+      padding: 0 10px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      padding: 14px 28px;
+      font-size: 28px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-family: 'Great Vibes', cursive;
+    }
+
+    button:hover {
+      transform: scale(1.15);
+    }
+
+    #evetBtn { 
+      background-color: #4caf50; 
+      color: white;  
+    }
+
+    #hayirBtn { 
+      background-color: #f44336; 
+      color: white; 
+      position: relative; 
+      z-index: 9999;  /* HAYIR BUTONU HER ZAMAN ÖNDE */
+    }
+
+    #text {
+      font-size: 12vw;
+      font-weight: bold;
+      color: #c2185b;
+      text-shadow: 0 0 15px #ff8ecf;
+      z-index: 1;
+      position: relative;
+    }
+
+    .heart {
+      position: fixed;
+      font-size: 22px;
+      animation: fall 3s linear forwards;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-30px) scale(1); opacity: 1; }
+      100% { transform: translateY(110vh) scale(1.5); opacity: 0; }
+    }
+
+    .gif-container {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+      gap: 15px;
+      z-index: 10;
+      max-width: 95%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .gif-container img {
+      width: 32vw;
+      max-width: 130px;
+      min-width: 90px;
+      border-radius: 14px;
+      opacity: 0;
+      transform: scale(0.5);
+      animation: popIn 1.5s forwards;
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    #loveText {
+      position: fixed;
+      top: 15%;
+      font-size: 13vw;
+      color: #ff2e93;
+      font-weight: bold;
+      text-shadow: 0 0 25px #ff6bbc;
+      display: none;
+      animation: loveFade 2.5s forwards;
+      z-index: 20;
+      padding: 0 10px;
+    }
+
+    @keyframes loveFade {
+      0% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <audio id="music">
+    <source src="audio.mp3" type="audio/mp3">
+  </audio>
+
+  <div id="loveText">bnd sni svyrm cnm &lt;3</div>
+
+  <div class="gif-container" id="gifs">
+    <img src="https://media.giphy.com/media/j5zW9FjQkeGJW/giphy.gif">
+    <img src="https://media.giphy.com/media/KztT2c4u8mYYUiMKdJ/giphy.gif">
+    <img src="https://media.giphy.com/media/l4FGI8GoTL7N4DsyI/giphy.gif">
+    <img src="https://media.tenor.com/8Y4gEhlBbX8AAAAM/cat-yippe-yippee.gif">
+  </div>
+
+  <div class="container">
+    <div id="text">Beni Seviyor Musun?</div>
+
+    <div class="buttons" id="buttonContainer">
+      <button id="evetBtn">Evet</button>
+      <button id="hayirBtn">Hayır</button>
+    </div>
+  </div>
+
+  <script>
+    const hayirBtn = document.getElementById("hayirBtn");
+    const evetBtn = document.getElementById("evetBtn");
+    const gifs = document.getElementById("gifs");
+    const music = document.getElementById("music");
+    const loveText = document.getElementById("loveText");
+    const buttonContainer = document.getElementById("buttonContainer");
+
+    let escaped = false;
+
+    hayirBtn.addEventListener("click", () => {
+      if (!escaped) {
+        const rect = hayirBtn.getBoundingClientRect();
+        const bodyRect = document.body.getBoundingClientRect();
+
+        hayirBtn.style.position = "absolute";
+        hayirBtn.style.left = rect.left - bodyRect.left + "px";
+        hayirBtn.style.top = rect.top - bodyRect.top + "px";
+        hayirBtn.style.zIndex = "9999";
+
+        document.body.appendChild(hayirBtn);
+        escaped = true;
+      }
+
+      const maxX = window.innerWidth - hayirBtn.offsetWidth;
+      const maxY = window.innerHeight - hayirBtn.offsetHeight;
+
+      hayirBtn.style.left = Math.random() * maxX + "px";
+      hayirBtn.style.top  = Math.random() * maxY + "px";
+      hayirBtn.style.zIndex = "9999";
+    });
+
+    evetBt
