@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zeynep Halil'i Seviyor Mu?</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
@@ -17,73 +17,94 @@
       background: radial-gradient(circle, #ffe4f2, #ffb8d9);
       font-family: 'Great Vibes', cursive;
       overflow: hidden;
+      animation: bgGlow 6s infinite alternate;
+    }
+
+    @keyframes bgGlow {
+      0% { background: radial-gradient(circle, #ffd6ec, #ffb1d6); }
+      100% { background: radial-gradient(circle, #ffe9f5, #ffa2ce); }
     }
 
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 14px;
+      gap: 20px;
       z-index: 100;
       text-align: center;
-      padding: 10px;
-    }
-
-    #text {
-      font-size: 10vw;
-      font-weight: bold;
-      color: #c2185b;
-      text-shadow: 0 0 10px #ff8ecf;
-      z-index: 100;
+      padding: 0 10px;
     }
 
     .buttons {
       display: flex;
       gap: 15px;
       z-index: 100;
+      position: relative;
     }
 
     button {
-      padding: 10px 20px;
-      font-size: 8vw;
+      padding: 14px 28px;
+      font-size: 28px;
       border: none;
       border-radius: 12px;
       cursor: pointer;
+      transition: 0.3s;
       font-family: 'Great Vibes', cursive;
+      z-index: 100;
     }
 
-    #evetBtn { background:#4caf50; color:#fff; }
-    #hayirBtn { background:#f44336; color:#fff; }
+    button:hover {
+      transform: scale(1.15);
+    }
+
+    #evetBtn { background-color: #4caf50; color: white; }
+    #hayirBtn { background-color: #f44336; color: white; z-index: 9999; }
+
+    #text {
+      font-size: 12vw;
+      font-weight: bold;
+      color: #c2185b;
+      text-shadow: 0 0 15px #ff8ecf;
+      z-index: 100;
+    }
 
     .gif {
-      width: 110px;
+      width: 130px;
+      border-radius: 14px;
       position: absolute;
-      border-radius: 12px;
-      display: none;
-      z-index: 2;
+      z-index: 1;
+      display: none; /* BAŞTA GİZLİ */
     }
 
     #loveText {
       position: fixed;
-      top: 12%;
-      font-size: 12vw;
+      top: 15%;
+      font-size: 13vw;
       color: #ff2e93;
+      font-weight: bold;
       text-shadow: 0 0 25px #ff6bbc;
       display: none;
+      animation: loveFade 2.5s forwards;
       z-index: 100;
+    }
+
+    @keyframes loveFade {
+      0% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1); }
     }
 
     .heart {
       position: fixed;
       font-size: 22px;
       animation: fall 3s linear forwards;
+      opacity: 0.85;
       pointer-events: none;
       z-index: 50;
     }
 
     @keyframes fall {
-      0% { transform: translateY(-20px); opacity:1; }
-      100% { transform: translateY(110vh); opacity:0; }
+      0% { transform: translateY(-30px) scale(1); opacity: 1; }
+      100% { transform: translateY(110vh) scale(1.5); opacity: 0; }
     }
   </style>
 </head>
@@ -95,20 +116,19 @@
 
   <div id="loveText">bnd sni svyrm cnm &lt;3</div>
 
-  <!-- GIFLER (BAŞLANGIÇTA GÖRÜNMEZ) -->
-  <img class="gif" src="https://media.giphy.com/media/j5zW9FjQkeGJW/giphy.gif">
+  <!-- BAŞTA GÖRÜNMEYEN TÜM GIFLER -->
+ 
   <img class="gif" src="https://media.giphy.com/media/KztT2c4u8mYYUiMKdJ/giphy.gif">
   <img class="gif" src="https://media.giphy.com/media/l4FGI8GoTL7N4DsyI/giphy.gif">
   <img class="gif" src="https://media.tenor.com/8Y4gEhlBbX8AAAAM/cat-yippe-yippee.gif">
   <img class="gif" src="https://media.tenor.com/Gn8utU2JvWcAAAAM/cat-jumping-jump-excited-yippee.gif">
 
+  <!-- ÖPÜCÜK ATAN KEDİLER (yeni eklenenler) -->
+  <img class="gif" src="https://media.giphy.com/media/l4pTsNgkamxfk2ZLq/giphy.gif">
+  <img class="gif" src="https://media.giphy.com/media/3oEduSbSGpGaRX2Vri/giphy.gif">
   <img class="gif" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
-  <img class="gif" src="https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif">
-  <img class="gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
-  <img class="gif" src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif">
-  <img class="gif" src="https://media.giphy.com/media/13borq7Zo2kulO/giphy.gif">
+  <img class="gif" src="https://media.giphy.com/media/l4HodBpDmoMA5p9bG/giphy.gif">
 
-  <!-- SORU + BUTONLAR -->
   <div class="container">
     <div id="text">Beni Seviyor Musun?</div>
 
@@ -125,35 +145,37 @@
     const music = document.getElementById("music");
     const loveText = document.getElementById("loveText");
     const text = document.getElementById("text");
-    const buttonContainer = document.getElementById("buttonContainer");
+    const container = document.getElementById("buttonContainer");
 
     let escaped = false;
 
+    /* HAYIR KAÇMA */
     hayirBtn.addEventListener("click", () => {
       if (!escaped) {
-        const rect = hayirBtn.getBoundingClientRect();
-        const body = document.body.getBoundingClientRect();
+        const r = hayirBtn.getBoundingClientRect();
         hayirBtn.style.position = "absolute";
-        hayirBtn.style.left = rect.left - body.left + "px";
-        hayirBtn.style.top = rect.top - body.top + "px";
+        hayirBtn.style.left = r.left + "px";
+        hayirBtn.style.top = r.top + "px";
         document.body.appendChild(hayirBtn);
         escaped = true;
       }
-      hayirBtn.style.left = Math.random() * (window.innerWidth - 80) + "px";
-      hayirBtn.style.top  = Math.random() * (window.innerHeight - 80) + "px";
+
+      hayirBtn.style.left = Math.random() * (window.innerWidth - hayirBtn.offsetWidth) + "px";
+      hayirBtn.style.top  = Math.random() * (window.innerHeight - hayirBtn.offsetHeight) + "px";
     });
 
+    /* FİZİK MOTORU */
     let gifObjects = [];
 
     gifs.forEach(gif => {
       gifObjects.push({
         el: gif,
-        x: Math.random() * (window.innerWidth - 100),
-        y: Math.random() * (window.innerHeight - 140),
-        vx: (Math.random() * 1.5 + 0.8) * (Math.random() < 0.5 ? -1 : 1),
-        vy: (Math.random() * 1.5 + 0.8) * (Math.random() < 0.5 ? -1 : 1),
-        w: 110,
-        h: 110,
+        x: Math.random() * (window.innerWidth - 130),
+        y: Math.random() * (window.innerHeight - 130),
+        vx: (Math.random() * 1.2 + 0.8) * (Math.random() < 0.5 ? -1 : 1),
+        vy: (Math.random() * 1.2 + 0.8) * (Math.random() < 0.5 ? -1 : 1),
+        w: 130,
+        h: 130,
         active: false
       });
     });
@@ -176,27 +198,27 @@
               g.y < other.y + other.h &&
               g.y + g.h > other.y
             ) {
-              g.vx *= -1;
-              g.vy *= -1;
-              other.vx *= -1;
-              other.vy *= -1;
+              let temp = g.vx; g.vx = other.vx; other.vx = temp;
+              temp = g.vy; g.vy = other.vy; other.vy = temp;
             }
           }
         });
 
         g.el.style.left = g.x + "px";
-        g.el.style.top = g.y + "px";
+        g.el.style.top  = g.y + "px";
       });
 
       requestAnimationFrame(moveGIFs);
     }
 
+    /* EVET BASILDIĞINDA */
     evetBtn.addEventListener("click", () => {
       music.play();
       loveText.style.display = "block";
       text.style.display = "none";
+
       hayirBtn.style.display = "none";
-      buttonContainer.style.display = "none";
+      container.style.display = "none";
 
       gifs.forEach(g => g.style.display = "block");
       gifObjects.forEach(g => g.active = true);
@@ -207,7 +229,6 @@
         const hearts = ["❤️","💖","💗","💕","💞","💘"];
         heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
         heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.fontSize = (20 + Math.random() * 20) + "px";
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 3000);
       }, 180);
